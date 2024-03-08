@@ -1,0 +1,15 @@
+version: '3'
+
+services:
+  postgres:
+    image: postgres:latest
+    container_name: fastai-database
+    restart: always
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_PASSWORD=Sosnova61S
+      - POSTGRES_USER=SiAvMaAnR
+      - POSTGRES_DB=FastAI
+    volumes:
+      - ../.meta/postgres:/var/lib/postgresql/data
