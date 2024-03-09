@@ -6,7 +6,4 @@ export class SignUpDto {
 
   @Length(4, 20)
   login: string;
-
-  @Length(6, 40)
-  password: string;
 }

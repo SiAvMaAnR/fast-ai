@@ -57,7 +57,7 @@ export class AuthService {
   }
 
   async signUp(signUpDto: SignUpDto) {
-    const { email, login, password } = signUpDto;
+    const { email, login } = signUpDto;
     const sameUser = await this.usersService.findOneByEmail(email);
 
     if (sameUser) {
