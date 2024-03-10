@@ -26,7 +26,9 @@ import { ClientsModule, Transport } from '@nestjs/microservices';
     ]),
     UsersModule,
     ConfigModule,
-    JwtModule.register({}),
+    JwtModule.register({
+      global: true,
+    }),
     TypeOrmModule.forFeature([User]),
   ],
   controllers: [AuthController],

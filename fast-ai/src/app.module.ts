@@ -8,6 +8,7 @@ import { AuthModule } from './components/auth/auth.module';
   imports: [
     ConfigModule.forRoot({
       load: [configuration],
+      isGlobal: true,
     }),
     AuthModule,
     TypeOrmModule.forRootAsync({
