@@ -12,7 +12,7 @@ services:
       - POSTGRES_USER=SiAvMaAnR
       - POSTGRES_DB=FastAI
     volumes:
-      - ../.meta/postgres:/var/lib/postgresql/data
+      - ./.meta/postgres:/var/lib/postgresql/data
 
   rabbitMQ:
     image: rabbitmq:latest
