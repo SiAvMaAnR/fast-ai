@@ -1,10 +1,13 @@
 import { IsEmail, Length } from 'class-validator';
+import { ApiKey } from 'src/modules/api-keys/entities/api-key.entity';
+import { Chat } from 'src/modules/chat/entities/chat.entity';
 import {
   Entity,
   Column,
   PrimaryGeneratedColumn,
   CreateDateColumn,
   UpdateDateColumn,
+  OneToMany,
 } from 'typeorm';
 
 @Entity()
@@ -28,6 +31,12 @@ export class User {
 
   @Column({ default: true })
   isActive: boolean;
+
+  @OneToMany(() => ApiKey, (key) => key.owner)
+  apiKeys: ApiKey[];
+
+  @OneToMany(() => Chat, (chat) => chat.owner)
+  chats: Chat[];
 
   @CreateDateColumn()
   createdDate: Date;

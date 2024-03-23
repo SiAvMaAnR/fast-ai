@@ -3,6 +3,8 @@ import { AuthService } from './auth.service';
 import { SignInDto } from './dto/sign-in.dto';
 import { SignUpDto } from './dto/sign-up.dto';
 import { ConfirmRegDto } from './dto/confirm-reg.dto';
+import { RefreshTokenDto } from './dto/refresh-token.dto';
+import { RevokeTokenDto } from './dto/revoke-token.dto';
 
 @Controller('auth')
 export class AuthController {
@@ -10,16 +12,26 @@ export class AuthController {
 
   @Post('sign-in')
   async signIn(@Body() signInDto: SignInDto) {
-    return await this.authService.signIn(signInDto);
+    return this.authService.signIn(signInDto);
   }
 
   @Post('sign-up')
   async signUp(@Body() signUpDto: SignUpDto) {
-    return await this.authService.signUp(signUpDto);
+    return this.authService.signUp(signUpDto);
   }
 
   @Post('confirm-reg')
   async confirmReg(@Body() confirmRegDto: ConfirmRegDto) {
-    return await this.authService.confirmReg(confirmRegDto);
+    return this.authService.confirmReg(confirmRegDto);
+  }
+
+  @Post('refresh-token')
+  async refreshToken(@Body() refreshTokenDto: RefreshTokenDto) {
+    return this.authService.refreshToken(refreshTokenDto);
+  }
+
+  @Post('revoke-token')
+  async revokeToken(@Body() revokeTokenDto: RevokeTokenDto) {
+    return this.authService.revokeToken(revokeTokenDto);
   }
 }

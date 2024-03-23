@@ -2,15 +2,27 @@ import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import configuration from './config/configuration';
+import { JwtModule } from '@nestjs/jwt';
 import { AuthModule } from './modules/auth/auth.module';
+import { UsersModule } from './modules/users/users.module';
+import { AiCoreModule } from './modules/ai-core/ai-core.module';
+import { ApiKeysModule } from './modules/api-keys/api-keys.module';
+import { ChatModule } from './modules/chat/chat.module';
 
 @Module({
   imports: [
+    AuthModule,
+    UsersModule,
+    ApiKeysModule,
+    ChatModule,
+    AiCoreModule,
     ConfigModule.forRoot({
       load: [configuration],
       isGlobal: true,
     }),
-    AuthModule,
+    JwtModule.register({
+      global: true,
+    }),
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
       inject: [ConfigService],

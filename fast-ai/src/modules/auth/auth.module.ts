@@ -1,9 +1,7 @@
 import { Module } from '@nestjs/common';
 import { AuthController } from './auth.controller';
 import { AuthService } from './auth.service';
-import { UsersModule } from '../users/users.module';
-import { JwtModule, JwtService } from '@nestjs/jwt';
-import { ConfigModule } from '@nestjs/config';
+import { JwtService } from '@nestjs/jwt';
 import { UsersService } from '../users/users.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from '../users/entities/users.entity';
@@ -24,11 +22,6 @@ import { ClientsModule, Transport } from '@nestjs/microservices';
         },
       },
     ]),
-    UsersModule,
-    ConfigModule,
-    JwtModule.register({
-      global: true,
-    }),
     TypeOrmModule.forFeature([User]),
   ],
   controllers: [AuthController],

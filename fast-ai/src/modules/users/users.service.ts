@@ -12,19 +12,19 @@ export class UsersService {
     private readonly usersRepository: Repository<User>,
   ) {}
 
-  async findOneById(id: number): Promise<User | null> {
+  async findOneById(id: number) {
     return this.usersRepository.findOneBy({ id });
   }
 
-  async findOneByEmail(email: string): Promise<User | null> {
+  async findOneByEmail(email: string) {
     return this.usersRepository.findOneBy({ email });
   }
 
-  async update(id: number, updateUserDto: UpdateUserDto): Promise<void> {
+  async update(id: number, updateUserDto: UpdateUserDto) {
     await this.usersRepository.update(id, updateUserDto);
   }
 
-  async create(createUserDto: CreateUserDto): Promise<void> {
+  async create(createUserDto: CreateUserDto) {
     await this.usersRepository.save(createUserDto);
   }
 }

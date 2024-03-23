@@ -1,4 +1,4 @@
-import { Inject, Injectable, UnauthorizedException } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { UsersService } from '../users/users.service';
 import { SignInDto } from './dto/sign-in.dto';
 import { JwtService } from '@nestjs/jwt';
@@ -9,6 +9,15 @@ import { ConfirmRegDto } from './dto/confirm-reg.dto';
 import { ClientProxy } from '@nestjs/microservices';
 import { SignUpDto } from './dto/sign-up.dto';
 import { UserPayload } from './auth.types';
+import { RefreshTokenDto } from './dto/refresh-token.dto';
+import { RevokeTokenDto } from './dto/revoke-token.dto';
+import {
+  FailedToRefreshTokenError,
+  FailedToRevokeTokenError,
+  InvalidCredentialsError,
+  TokenIsNotValidError,
+} from './auth.errors';
+import { UserAlreadyExistsError } from '../users/users.errors';
 
 @Injectable()
 export class AuthService {
@@ -40,7 +49,7 @@ export class AuthService {
     const isVerify = await argon.verify(user.passwordHash, password);
 
     if (!isVerify) {
-      throw new UnauthorizedException('Invalid credentials');
+      throw new InvalidCredentialsError();
     }
 
     const userPayload = {
@@ -67,7 +76,7 @@ export class AuthService {
     const sameUser = await this.usersService.findOneByEmail(email);
 
     if (sameUser) {
-      throw new Error('Same user already exists');
+      throw new UserAlreadyExistsError();
     }
 
     const token = await this.jwtService.signAsync(
@@ -93,14 +102,15 @@ export class AuthService {
     });
 
     if (!verify) {
-      throw new Error('Token is not correct');
+      throw new TokenIsNotValidError();
     }
+
     const { login, email } = verify;
 
     const sameUser = await this.usersService.findOneByEmail(email);
 
     if (sameUser) {
-      throw new Error('Same user already exists');
+      throw new UserAlreadyExistsError();
     }
 
     const passwordHash = await argon.hash(password);
@@ -110,5 +120,60 @@ export class AuthService {
       login,
       passwordHash,
     });
+  }
+
+  async refreshToken(refreshTokenDto: RefreshTokenDto) {
+    const { refreshToken } = refreshTokenDto;
+
+    try {
+      const verify = await this.jwtService.verifyAsync(refreshToken, {
+        secret: this.authConfig.refreshToken.secret,
+      });
+
+      const user = await this.usersService.findOneByEmail(verify.email);
+      if (!user) {
+        throw new Error('User is not found');
+      }
+
+      const isVerify = await argon.verify(user.refreshToken, refreshToken);
+
+      if (!isVerify) {
+        throw new Error('Failed to verify token');
+      }
+
+      const newAccessToken = await this.createToken(
+        {
+          sub: user.id,
+          email: user.email,
+        },
+        this.authConfig.accessToken,
+      );
+
+      return newAccessToken;
+    } catch {
+      throw new FailedToRefreshTokenError();
+    }
+  }
+
+  async revokeToken(revokeTokenDto: RevokeTokenDto) {
+    const { refreshToken } = revokeTokenDto;
+
+    try {
+      const verify = await this.jwtService.verifyAsync(refreshToken, {
+        secret: this.authConfig.refreshToken.secret,
+      });
+
+      const user = await this.usersService.findOneByEmail(verify.email);
+      console.log(user, verify);
+      if (!user) {
+        throw new Error('User is not found');
+      }
+
+      await this.usersService.update(user.id, {
+        refreshToken: null,
+      });
+    } catch {
+      throw new FailedToRevokeTokenError();
+    }
   }
 }
