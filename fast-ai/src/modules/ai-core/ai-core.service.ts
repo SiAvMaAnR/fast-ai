@@ -15,7 +15,7 @@ export class AiCoreService {
 
   async createMessage(createMessageDto: CreateMessageDto) {
     const ai = new openAI({
-      apiKey: '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',
+      apiKey: null,
     });
 
     const chatCompletion = await ai.chat.completions.create({
