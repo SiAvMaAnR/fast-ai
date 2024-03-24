@@ -14,10 +14,10 @@ export class Message {
   id!: number;
 
   @Column()
-  content!: string;
+  content: string;
 
-  @Column({ default: true })
-  isActive: boolean;
+  @Column()
+  role: string;
 
   @ManyToOne(() => Chat, (chat) => chat.messages)
   chat: Chat;

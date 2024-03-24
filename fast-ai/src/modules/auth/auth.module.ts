@@ -4,7 +4,7 @@ import { AuthService } from './auth.service';
 import { JwtService } from '@nestjs/jwt';
 import { UsersService } from '../users/users.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { User } from '../users/entities/users.entity';
+import { User } from '../users/entities/user.entity';
 import { ClientsModule, Transport } from '@nestjs/microservices';
 
 @Module({

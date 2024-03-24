@@ -13,7 +13,7 @@ import { CreateChatDto } from './dto/create-chat.dto';
 import { UpdateChatDto } from './dto/update-chat.dto';
 import { AuthGuard } from '../auth/auth.guard';
 import { ReqUser } from '../auth/auth.decorators';
-import { User } from '../users/entities/users.entity';
+import { User } from '../users/entities/user.entity';
 import { ApiBearerAuth } from '@nestjs/swagger';
 
 @ApiBearerAuth()

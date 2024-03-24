@@ -12,7 +12,7 @@ import { ApiKeysService } from './api-keys.service';
 import { CreateApiKeyDto } from './dto/create-api-key.dto';
 import { UpdateApiKeyDto } from './dto/update-api-key.dto';
 import { ReqUser } from '../auth/auth.decorators';
-import { User } from '../users/entities/users.entity';
+import { User } from '../users/entities/user.entity';
 import { AuthGuard } from '../auth/auth.guard';
 import { ApiBearerAuth } from '@nestjs/swagger';
 

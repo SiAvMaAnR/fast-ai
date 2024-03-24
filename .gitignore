@@ -37,4 +37,8 @@
 # ENV
 **/.env
 
+# Volumes
 **/.meta
+
+# Utils
+**/.keys.txt

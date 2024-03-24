@@ -3,7 +3,7 @@ import { CreateChatDto } from './dto/create-chat.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Chat } from './entities/chat.entity';
 import { Repository } from 'typeorm';
-import { User } from '../users/entities/users.entity';
+import { User } from '../users/entities/user.entity';
 import { UpdateChatDto } from './dto/update-chat.dto';
 import { ChatNotFoundError } from './chat.errors';
 
