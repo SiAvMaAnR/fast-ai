@@ -1,5 +1,6 @@
-import { Message } from 'src/modules/ai-core/entities/message.entity';
-import { User } from 'src/modules/users/entities/users.entity';
+import { ApiKey } from 'src/modules/api-keys/entities/api-key.entity';
+import { Message } from 'src/modules/messages/entities/message.entity';
+import { User } from 'src/modules/users/entities/user.entity';
 import {
   Entity,
   Column,
@@ -18,14 +19,20 @@ export class Chat {
   @Column()
   name: string;
 
-  @Column({ default: true })
-  isActive: boolean;
-
   @ManyToOne(() => User, (user) => user.apiKeys)
   owner: User;
 
+  @Column()
+  ownerId: number;
+
   @OneToMany(() => Message, (message) => message.chat)
   messages: Message[];
+
+  @ManyToOne(() => ApiKey, (apiKey) => apiKey.chats)
+  apiKey: ApiKey;
+
+  @Column()
+  apiKeyId: number;
 
   @CreateDateColumn()
   createdDate: Date;

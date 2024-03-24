@@ -1,4 +1,7 @@
-import { User } from 'src/modules/users/entities/users.entity';
+import { AIModelEnum } from 'src/modules/ai-communicator/ai-communicator.constants';
+import { Chat } from 'src/modules/chat/entities/chat.entity';
+import { ColumnTypeEnum } from 'src/modules/common/common.enums';
+import { User } from 'src/modules/users/entities/user.entity';
 import {
   Entity,
   Column,
@@ -6,6 +9,7 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   ManyToOne,
+  OneToMany,
 } from 'typeorm';
 
 @Entity()
@@ -14,13 +18,22 @@ export class ApiKey {
   id!: number;
 
   @Column()
-  content!: string;
-
-  @Column({ default: true })
-  isActive: boolean;
+  content: string;
 
   @ManyToOne(() => User, (user) => user.apiKeys)
   owner: User;
+
+  @Column()
+  ownerId: number;
+
+  @OneToMany(() => Chat, (chat) => chat.apiKey)
+  chats: Chat[];
+
+  @Column({
+    type: ColumnTypeEnum.Enum,
+    enum: AIModelEnum,
+  })
+  model: AIModelEnum;
 
   @CreateDateColumn()
   createdDate: Date;

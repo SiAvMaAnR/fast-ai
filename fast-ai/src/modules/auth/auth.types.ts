@@ -1,9 +1,9 @@
-export type UserPayload = {
+export type UserPayloadT = {
   email: string;
   sub: number;
 };
 
-export type RegistrationUserPayload = {
+export type RegistrationUserPayloadT = {
   email: string;
   login: string;
 };

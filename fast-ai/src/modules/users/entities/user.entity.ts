@@ -29,9 +29,6 @@ export class User {
   @Column({ nullable: true })
   refreshToken?: string;
 
-  @Column({ default: true })
-  isActive: boolean;
-
   @OneToMany(() => ApiKey, (key) => key.owner)
   apiKeys: ApiKey[];
 

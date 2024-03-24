@@ -8,7 +8,7 @@ import * as argon from 'argon2';
 import { ConfirmRegDto } from './dto/confirm-reg.dto';
 import { ClientProxy } from '@nestjs/microservices';
 import { SignUpDto } from './dto/sign-up.dto';
-import { UserPayload } from './auth.types';
+import { UserPayloadT } from './auth.types';
 import { RefreshTokenDto } from './dto/refresh-token.dto';
 import { RevokeTokenDto } from './dto/revoke-token.dto';
 import {
@@ -32,7 +32,10 @@ export class AuthService {
     this.authConfig = this.configService.get<AppAuthConfig>('app.auth');
   }
 
-  async createToken(userPayload: UserPayload, tokenConfig: AppAuthTokenConfig) {
+  async createToken(
+    userPayload: UserPayloadT,
+    tokenConfig: AppAuthTokenConfig,
+  ) {
     const result = this.jwtService.signAsync(userPayload, {
       expiresIn: tokenConfig.expiresIn,
       secret: tokenConfig.secret,
