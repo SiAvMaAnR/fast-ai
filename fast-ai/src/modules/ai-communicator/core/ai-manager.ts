@@ -1,14 +1,15 @@
 import { Injectable } from '@nestjs/common';
+import { MessageT } from './ai-manager.types';
 
 export interface IAIModel {
-  createCompletion(message: string): Promise<string>;
+  createCompletion(message: Array<MessageT>): Promise<MessageT>;
 }
 
 @Injectable()
 export class AIManager {
   public constructor(private readonly model: IAIModel) {}
 
-  createCompletion(message: string) {
-    return this.model.createCompletion(message);
+  createCompletion(messages: Array<MessageT>) {
+    return this.model.createCompletion(messages);
   }
 }

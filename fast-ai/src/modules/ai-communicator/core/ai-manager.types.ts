@@ -1,3 +1,4 @@
-export type CreateCompletionResponseT = {
+export type MessageT = {
   content: string;
+  role: string;
 };

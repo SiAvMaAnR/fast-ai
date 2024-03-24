@@ -22,6 +22,9 @@ export class Message {
   @ManyToOne(() => Chat, (chat) => chat.messages)
   chat: Chat;
 
+  @Column()
+  chatId: number;
+
   @CreateDateColumn()
   createdDate: Date;
 

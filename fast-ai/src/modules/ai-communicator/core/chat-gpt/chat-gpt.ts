@@ -1,6 +1,7 @@
 import openAI from 'openai';
 import { IAIModel } from '../ai-manager';
 import { GptMessageRoleEnum, GptModelEnum } from './chat-gpt.constants';
+import { MessageT } from '../ai-manager.types';
 
 class ChatGPTModel implements IAIModel {
   private client: openAI;
@@ -11,23 +12,20 @@ class ChatGPTModel implements IAIModel {
     this.model = model;
   }
 
-  async createCompletion(message: string) {
+  async createCompletion(messages: Array<MessageT>): Promise<MessageT> {
+    const adaptedMessages = messages.map((message) => ({
+      ...message,
+      role: message.role as GptMessageRoleEnum,
+    }));
+
     const chatCompletion = await this.client.chat.completions.create({
-      messages: [
-        {
-          role: GptMessageRoleEnum.User,
-          content: message,
-        },
-      ],
+      messages: adaptedMessages,
       model: this.model,
     });
 
-    // message: role, content
     const [choice] = chatCompletion.choices;
 
-    const { content } = choice.message;
-
-    return content.toString();
+    return choice.message;
   }
 }
 

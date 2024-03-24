@@ -22,11 +22,17 @@ export class Chat {
   @ManyToOne(() => User, (user) => user.apiKeys)
   owner: User;
 
+  @Column()
+  ownerId: number;
+
   @OneToMany(() => Message, (message) => message.chat)
   messages: Message[];
 
   @ManyToOne(() => ApiKey, (apiKey) => apiKey.chats)
   apiKey: ApiKey;
+
+  @Column()
+  apiKeyId: number;
 
   @CreateDateColumn()
   createdDate: Date;

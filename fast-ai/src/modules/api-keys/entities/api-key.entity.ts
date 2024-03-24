@@ -1,6 +1,6 @@
-import { ColumnTypeEnum } from 'src/common/enums/column-type';
 import { AIModelEnum } from 'src/modules/ai-communicator/ai-communicator.constants';
 import { Chat } from 'src/modules/chat/entities/chat.entity';
+import { ColumnTypeEnum } from 'src/modules/common/common.enums';
 import { User } from 'src/modules/users/entities/user.entity';
 import {
   Entity,
@@ -18,13 +18,13 @@ export class ApiKey {
   id!: number;
 
   @Column()
-  content!: string;
-
-  @Column({ default: false })
-  isActive: boolean;
+  content: string;
 
   @ManyToOne(() => User, (user) => user.apiKeys)
   owner: User;
+
+  @Column()
+  ownerId: number;
 
   @OneToMany(() => Chat, (chat) => chat.apiKey)
   chats: Chat[];

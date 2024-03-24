@@ -4,7 +4,9 @@ enum GptModelEnum {
 }
 
 enum GptMessageRoleEnum {
+  System = 'system',
   User = 'user',
+  Assistant = 'assistant',
 }
 
 export { GptModelEnum, GptMessageRoleEnum };
