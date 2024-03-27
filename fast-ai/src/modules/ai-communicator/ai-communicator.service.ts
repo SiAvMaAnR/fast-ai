@@ -2,21 +2,20 @@ import { Injectable } from '@nestjs/common';
 import { AIManager } from './core/ai-manager';
 import { ChatGPTModel } from './core/chat-gpt/chat-gpt';
 import { CreateCompletionDto } from './dto/create-completion.dto';
-import {
-  GptMessageRoleEnum,
-  GptModelEnum,
-} from './core/chat-gpt/chat-gpt.constants';
+import { GptMessageRoleEnum } from './core/chat-gpt/chat-gpt.types';
 import { User } from '../users/entities/user.entity';
 import { Message } from '../messages/entities/message.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { RecordNotFoundError } from '../common/common.errors';
-import { AIModelEnum } from './ai-communicator.constants';
 import { Chat } from '../chat/entities/chat.entity';
+import { AIIntegrationEnum } from './core/ai-manager.types';
+import { ChatSonicModel } from './core/chat-sonic/chat-sonic';
+import { modelMapper } from './core/ai-manager.model-mapper';
 
 const AIModelInstanceMap = {
-  [AIModelEnum.ChatGPT]: ChatGPTModel,
-  // [AIModelEnum.ChatSonic]: ChatSonicModel,
+  [AIIntegrationEnum.ChatGPT]: ChatGPTModel,
+  [AIIntegrationEnum.ChatSonic]: ChatSonicModel,
 };
 
 @Injectable()
@@ -48,10 +47,11 @@ export class AiCoreService {
     }
 
     const { apiKey, messages } = chat;
-
     const { model, content } = apiKey;
 
-    const aiModel = new AIModelInstanceMap[model](content, GptModelEnum.Gpt3T);
+    const integration = modelMapper[model];
+
+    const aiModel = new AIModelInstanceMap[integration](content, model);
 
     const aiClient = new AIManager(aiModel);
 

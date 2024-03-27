@@ -1,13 +1,13 @@
 import openAI from 'openai';
 import { IAIModel } from '../ai-manager';
-import { GptMessageRoleEnum, GptModelEnum } from './chat-gpt.constants';
-import { MessageT } from '../ai-manager.types';
+import { GptMessageRoleEnum } from './chat-gpt.types';
+import { AIModelEnum, MessageT } from '../ai-manager.types';
 
 class ChatGPTModel implements IAIModel {
   private client: openAI;
-  private model: GptModelEnum;
+  private model: AIModelEnum;
 
-  public constructor(apiKey: string, model: GptModelEnum) {
+  public constructor(apiKey: string, model: AIModelEnum) {
     this.client = new openAI({ apiKey });
     this.model = model;
   }

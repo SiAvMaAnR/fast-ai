@@ -1,11 +1,10 @@
 import { IAIModel } from '../ai-manager';
-import { MessageT } from '../ai-manager.types';
-import { SonicModelEnum } from './chat-sonic.constants';
+import { AIModelEnum, MessageT } from '../ai-manager.types';
 
 class ChatSonicModel implements IAIModel {
-  private model: SonicModelEnum;
+  private model: AIModelEnum;
 
-  public constructor(apiKey: string, model: SonicModelEnum) {
+  public constructor(apiKey: string, model: AIModelEnum) {
     this.model = model;
   }
 

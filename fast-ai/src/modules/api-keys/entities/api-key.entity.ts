@@ -1,4 +1,4 @@
-import { AIModelEnum } from 'src/modules/ai-communicator/ai-communicator.constants';
+import { AIModelEnum } from 'src/modules/ai-communicator/core/ai-manager.types';
 import { Chat } from 'src/modules/chat/entities/chat.entity';
 import { ColumnTypeEnum } from 'src/modules/common/common.enums';
 import { User } from 'src/modules/users/entities/user.entity';

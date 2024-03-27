@@ -1,6 +1,6 @@
 enum SonicModelEnum {
-  Gpt3T = 'gpt-3.5-turbo',
-  Gpt4 = 'gpt-4',
+  A = 'a',
+  B = 'b',
 }
 
 enum SonicMessageRoleEnum {
