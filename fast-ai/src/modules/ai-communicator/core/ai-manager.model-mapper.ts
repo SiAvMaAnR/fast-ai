@@ -1,9 +1,13 @@
 import { AIIntegrationEnum } from './ai-manager.types';
-import { GptModelEnum } from './chat-gpt/chat-gpt.types';
-import { SonicModelEnum } from './chat-sonic/chat-sonic.types';
+import { ChatGPTModelEnum } from './chat-gpt/chat-gpt.types';
+import { GigaChatModelEnum } from './giga-chat/giga-chat.types';
+import { YandexGPTModelEnum } from './yandex-gpt/yandex-gpt.types';
 
 export const modelMapper = {
-  [GptModelEnum.Gpt3T]: AIIntegrationEnum.ChatGPT,
-  [GptModelEnum.Gpt4]: AIIntegrationEnum.ChatGPT,
-  [SonicModelEnum.A]: AIIntegrationEnum.ChatSonic,
+  [ChatGPTModelEnum.Gpt3T]: AIIntegrationEnum.ChatGPT,
+  [ChatGPTModelEnum.Gpt4]: AIIntegrationEnum.ChatGPT,
+  [YandexGPTModelEnum.YaLite]: AIIntegrationEnum.YandexGPT,
+  [GigaChatModelEnum.GigaChat]: AIIntegrationEnum.GigaChat,
+  [GigaChatModelEnum.GigaChatPlus]: AIIntegrationEnum.GigaChat,
+  [GigaChatModelEnum.GigaChatPro]: AIIntegrationEnum.GigaChat,
 };

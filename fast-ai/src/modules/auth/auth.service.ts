@@ -167,7 +167,7 @@ export class AuthService {
       });
 
       const user = await this.usersService.findOneByEmail(verify.email);
-      console.log(user, verify);
+
       if (!user) {
         throw new Error('User is not found');
       }

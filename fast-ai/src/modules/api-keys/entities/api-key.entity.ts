@@ -20,6 +20,9 @@ export class ApiKey {
   @Column()
   content: string;
 
+  @Column({ nullable: true })
+  optionalContent?: string;
+
   @ManyToOne(() => User, (user) => user.apiKeys)
   owner: User;
 
