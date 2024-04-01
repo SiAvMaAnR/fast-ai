@@ -43,9 +43,14 @@ export class ChatService {
   }
 
   async findOne(user: User, id: number) {
-    return this.chatRepository.findOneBy({
-      id,
-      owner: { id: user.id },
+    return this.chatRepository.findOne({
+      where: {
+        id,
+        owner: { id: user.id },
+      },
+      relations: {
+        messages: true,
+      },
     });
   }
 

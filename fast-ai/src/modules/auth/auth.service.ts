@@ -90,7 +90,7 @@ export class AuthService {
       },
     );
 
-    this.client.emit('send_message', {
+    this.client.emit('send_confirmation', {
       email,
       username: login,
       token,

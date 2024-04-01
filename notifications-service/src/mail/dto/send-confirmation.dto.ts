@@ -1,6 +1,6 @@
 import { IsEmail } from 'class-validator';
 
-export class SendMessageDto {
+export class SendConfirmationDto {
   @IsEmail()
   email: string;
   username: string;
