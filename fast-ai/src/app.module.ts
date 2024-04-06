@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { JwtModule } from '@nestjs/jwt';
@@ -8,6 +8,7 @@ import { AiCommunicatorModule } from './ai-communicator/ai-communicator.module';
 import { ApiKeysModule } from './api-keys/api-keys.module';
 import { ChatModule } from './chat/chat.module';
 import configuration from './common/common.config';
+import { TimerMiddleware } from './common/middlewares/timer.middleware';
 
 @Module({
   imports: [
@@ -42,4 +43,8 @@ import configuration from './common/common.config';
     }),
   ],
 })
-export class AppModule {}
+export class AppModule implements NestModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer.apply(TimerMiddleware).forRoutes('*');
+  }
+}
