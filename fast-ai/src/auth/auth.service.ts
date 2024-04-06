@@ -116,13 +116,7 @@ export class AuthService {
       throw new UserAlreadyExistsError();
     }
 
-    const passwordHash = await argon.hash(password);
-
-    await this.usersService.create({
-      email,
-      login,
-      passwordHash,
-    });
+    await this.usersService.create({ email, login, password });
   }
 
   async refreshToken(refreshTokenDto: RefreshTokenDto) {

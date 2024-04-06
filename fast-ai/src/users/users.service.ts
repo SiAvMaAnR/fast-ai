@@ -4,6 +4,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { CreateUserDto } from './dto/create-user.dto';
+import * as argon from 'argon2';
 
 @Injectable()
 export class UsersService {
@@ -25,6 +26,13 @@ export class UsersService {
   }
 
   async create(createUserDto: CreateUserDto) {
-    await this.usersRepository.save(createUserDto);
+    const { email, login, password } = createUserDto;
+    const passwordHash = await argon.hash(password);
+
+    await this.usersRepository.save({
+      email,
+      login,
+      passwordHash,
+    });
   }
 }
