@@ -1,13 +1,14 @@
-import { Module } from '@nestjs/common';
+import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import configuration from './config/configuration';
 import { JwtModule } from '@nestjs/jwt';
-import { AuthModule } from './modules/auth/auth.module';
-import { UsersModule } from './modules/users/users.module';
-import { AiCoreModule } from './modules/ai-communicator/ai-communicator.module';
-import { ApiKeysModule } from './modules/api-keys/api-keys.module';
-import { ChatModule } from './modules/chat/chat.module';
+import { AuthModule } from './auth/auth.module';
+import { UsersModule } from './users/users.module';
+import { AiCommunicatorModule } from './ai-communicator/ai-communicator.module';
+import { ApiKeysModule } from './api-keys/api-keys.module';
+import { ChatModule } from './chat/chat.module';
+import configuration from './common/common.config';
+import { TimerMiddleware } from './common/middlewares/timer.middleware';
 
 @Module({
   imports: [
@@ -15,7 +16,7 @@ import { ChatModule } from './modules/chat/chat.module';
     UsersModule,
     ApiKeysModule,
     ChatModule,
-    AiCoreModule,
+    AiCommunicatorModule,
     ConfigModule.forRoot({
       load: [configuration],
       isGlobal: true,
@@ -42,4 +43,8 @@ import { ChatModule } from './modules/chat/chat.module';
     }),
   ],
 })
-export class AppModule {}
+export class AppModule implements NestModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer.apply(TimerMiddleware).forRoutes('*');
+  }
+}

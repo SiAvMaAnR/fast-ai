@@ -9,11 +9,13 @@ export class MailService {
   async sendConfirmation(args: ConfirmationArgs) {
     const { token, username, email } = args;
 
+    const subject = 'Welcome to FastAI! Confirm your Email';
+
     const url = `example.com/auth/confirm?token=${token}`;
 
     await this.mailerService.sendMail({
       to: email,
-      subject: 'Welcome to FastAI! Confirm your Email',
+      subject,
       template: './confirmation',
       context: {
         name: username,
