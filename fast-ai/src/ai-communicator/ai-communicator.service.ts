@@ -41,7 +41,9 @@ export class AiCommunicatorService {
 
     const { apiKey, messages } = chat;
 
-    const integration = modelMapper[apiKey.model];
+    const integration = modelMapper[
+      apiKey.model
+    ] as keyof typeof AIModelInstanceMap;
 
     const aiModel: IAIModel = new AIModelInstanceMap[integration](apiKey);
 
